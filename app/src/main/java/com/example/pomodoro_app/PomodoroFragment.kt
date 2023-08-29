@@ -31,7 +31,7 @@ class PomodoroFragment : Fragment(), View.OnClickListener {
     private lateinit var progressBarCircle : ProgressBar
     private lateinit var editTextMinute : EditText
     private lateinit var textViewTime : TextView
-    private lateinit var imageViewReset : ImageView
+    private lateinit var imageViewSkip : ImageView
     private lateinit var imageViewStartStop : ImageView
     private lateinit var countDownTimer: CountDownTimer
 
@@ -51,28 +51,47 @@ class PomodoroFragment : Fragment(), View.OnClickListener {
         return view
     }
 
+
+
     private fun initViews(view : View) {
         progressBarCircle = view.findViewById(R.id.progressBarCircle)
         editTextMinute = view.findViewById(R.id.editTextMinute)
         textViewTime = view.findViewById(R.id.textViewTime)
-        imageViewReset = view.findViewById(R.id.imageViewReset)
+        imageViewSkip = view.findViewById(R.id.imageViewSkip)
         imageViewStartStop = view.findViewById(R.id.imageViewStartStop)
     }
 
-
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PomodoroFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun initListeners() {
+        imageViewSkip.setOnClickListener(this)
+        imageViewStartStop.setOnClickListener(this)
     }
 
-    override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
+    /**
+     * click 관련 설정
+     */
+
+    override fun onClick(view: View) {
+       when (view.id){
+           R.id.imageViewSkip -> skip()
+           R.id.imageViewStartStop -> startStop()
+       }
     }
+
+
+    private fun skip() {
+        stopCoutDownTimer()
+        startCountDownTimer()
+    }
+
+    private fun startStop() {
+        if(timerStatus == TimerStatus.STOPPED){
+            setTimerValues()
+            setProgressBarValues()
+
+            imageViewSkip.visibility = View.VISIBLE;
+            imageViewStartStop.setImageResource(R.)
+        }
+    }
+
+
 }
